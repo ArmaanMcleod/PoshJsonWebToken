@@ -6,15 +6,33 @@ using PoshJsonWebToken.Common;
 
 namespace PoshJsonWebToken.Commands;
 
+/// <summary>
+/// Implementation for Test-JsonWebToken cmdlet.
+/// </summary>
 [Cmdlet(VerbsDiagnostic.Test, "JsonWebToken")]
 public sealed class TestJsonWebTokenCommand : JsonWebTokenCommandBase
 {
+    #region Parameters
+
+    /// <summary>
+    /// The JWT token to decode.
+    /// </summary>
     [Parameter(Mandatory = true)]
     public SecureString Token { get; set; }
 
+    /// <summary>
+    /// The hash algorithm used to encode JWT token.
+    /// </summary>
     [Parameter(Mandatory = true)]
     public JwsAlgorithm Algorithm { get; set; }
 
+    #endregion Parameters
+
+    #region Overrides
+
+    /// <summary>
+    /// Process record.
+    /// </summary>
     protected override void ProcessRecord()
     {
         bool result;
@@ -38,4 +56,6 @@ public sealed class TestJsonWebTokenCommand : JsonWebTokenCommandBase
 
         WriteObject(result);
     }
+
+    #endregion Overrides
 }

@@ -104,6 +104,10 @@ function Write-Log {
     Write-Host -ForegroundColor $foregroundColor "${indentPrefix}${Message}"
 }
 
+<#
+.SYNOPSIS
+    Expands Nupkg package contents by first converting to ZIP then expanding archive.
+#>
 function Expand-Nupkg {
     param (
         [string] $ModuleManfifestPath,
