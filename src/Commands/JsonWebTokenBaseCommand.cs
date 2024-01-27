@@ -8,17 +8,41 @@ using PoshJsonWebToken.Common;
 
 namespace PoshJsonWebToken.Commands;
 
+/// <summary>
+/// Base class for any Json Web Token cmdlet.
+/// </summary>
 public abstract class JsonWebTokenCommandBase : PSCmdlet
 {
+    #region Parameter Sets
+
     private const string SecretKeyParameterSet = "SecretKey";
     private const string CertificateParameterSet = "Certificate";
 
+    #endregion Parameter Sets
+
+    #region Parameters
+
+    /// <summary>
+    /// Secure key used for signing JWT token.
+    /// </summary>
     [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
     public SecureString SecretKey { get; set; }
 
+    /// <summary>
+    /// Certificate used for signing JWT token.
+    /// </summary>
     [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
     public X509Certificate2 Certificate { get; set; }
 
+    #endregion Parameters
+
+    #region Protected Members
+
+    /// <summary>
+    /// Method used to determine hash algorithm hash signing key.
+    /// </summary>
+    /// <param name="algorithm">The hash algorithm</param>
+    /// <returns>The signing key object.</returns>
     protected object GetTokenSigningKey(JwsAlgorithm algorithm)
     {
         var algorithmFamily = AlgorithmHelpers.GetAlgorithmFamily(algorithm);
@@ -54,4 +78,6 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
 
         return key;
     }
+
+    #endregion Protected Members
 }
