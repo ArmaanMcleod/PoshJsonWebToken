@@ -27,6 +27,13 @@ New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <H
  -Certificate <X509Certificate2> [<CommonParameters>]
 ```
 
+### None
+
+```powershell
+New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <Hashtable>]
+ [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
 The `New-JsonWebToken` cmdlet can be used to create a new Json Web Token (JWT) using a secret key or certificate.

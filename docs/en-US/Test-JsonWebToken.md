@@ -27,6 +27,13 @@ Test-JsonWebToken -Token <SecureString> -Algorithm <JwsAlgorithm> -Certificate <
  [<CommonParameters>]
 ```
 
+### None
+
+```powershell
+New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <Hashtable>]
+ [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
 The `Test-JsonWebToken` cmdlet can be used to ensure Json Web Token (JWT) is valid.
