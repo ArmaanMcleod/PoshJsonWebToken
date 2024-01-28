@@ -38,6 +38,9 @@ jobs:
     needs:
       - build
     runs-on: ${{ matrix.info.os }}
+    permissions:
+      checks: write
+      pull-requests: write
     strategy:
       fail-fast: false
       matrix:
@@ -76,3 +79,10 @@ jobs:
         with:
           name: Unit Test Results (${{ matrix.info.name }})
           path: ./out/TestResults/Pester.xml
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            ./out/TestResults/Pester.xml
