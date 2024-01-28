@@ -82,7 +82,14 @@ jobs:
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        if: always() && eq('${{ matrix.info.os }}', 'Linux')
+        with:
+          files: |
+            ./out/TestResults/Pester.xml
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        if: always() && ne('${{ matrix.info.os }}', 'Linux')
         with:
           files: |
             ./out/TestResults/Pester.xml
