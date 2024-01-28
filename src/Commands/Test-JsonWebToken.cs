@@ -17,13 +17,17 @@ public sealed class TestJsonWebTokenCommand : JsonWebTokenCommandBase
     /// <summary>
     /// The JWT token to decode.
     /// </summary>
-    [Parameter(Mandatory = true)]
+    [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
     public SecureString Token { get; set; }
 
     /// <summary>
     /// The hash algorithm used to encode JWT token.
     /// </summary>
-    [Parameter(Mandatory = true)]
+    [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
     public JwsAlgorithm Algorithm { get; set; }
 
     #endregion Parameters

@@ -8,11 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PoshJsonWebToken.Resources
-{
+namespace PoshJsonWebToken.Resources {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,70 +22,76 @@ namespace PoshJsonWebToken.Resources
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AlgorithmStrings
-    {
-
+    internal class AlgorithmStrings {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AlgorithmStrings()
-        {
+        internal AlgorithmStrings() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PoshJsonWebToken.resources.AlgorithmStrings", typeof(AlgorithmStrings).Assembly);
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PoshJsonWebToken.Resources.AlgorithmStrings", typeof(AlgorithmStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The algorithm &apos;{0}&apos; requires a key using -SecretKey or -Certificate parameters..
+        /// </summary>
+        internal static string AlgorithmRequiresKey {
+            get {
+                return ResourceManager.GetString("AlgorithmRequiresKey", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Certificate parameter requires any one of &apos;{0}&apos; algorithms..
-        /// /// </summary>
-        internal static string CertificateRequiredAlgorithms
-        {
-            get
-            {
+        /// </summary>
+        internal static string CertificateRequiredAlgorithms {
+            get {
                 return ResourceManager.GetString("CertificateRequiredAlgorithms", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using NONE (unprotected) plain text algorithm without integrity protection..
+        /// </summary>
+        internal static string NoneAlgorithmWarning {
+            get {
+                return ResourceManager.GetString("NoneAlgorithmWarning", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Secret parameter requires any one of &apos;{0}&apos; algorithms..
         /// </summary>
-        internal static string SecretRequiredAlgorithms
-        {
-            get
-            {
+        internal static string SecretRequiredAlgorithms {
+            get {
                 return ResourceManager.GetString("SecretRequiredAlgorithms", resourceCulture);
             }
         }

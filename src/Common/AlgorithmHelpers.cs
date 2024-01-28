@@ -76,4 +76,21 @@ internal static class AlgorithmHelpers
             certificate);
         cmdlet.ThrowTerminatingError(errorRecord);
     }
+
+    /// <summary>
+    /// Throws an exception if algorithm is used without key.
+    /// </summary>
+    /// <param name="cmdlet">The cmdlet.</param>
+    /// <param name="algorithm">The hash algorithm.</param>
+    internal static void ReportAlgorithmWithoutKey(PSCmdlet cmdlet, JwsAlgorithm algorithm)
+    {
+        var errorMessage = string.Format(AlgorithmStrings.AlgorithmRequiresKey, algorithm);
+        var exception = new ArgumentException(errorMessage);
+        var errorRecord = new ErrorRecord(
+            exception,
+            nameof(AlgorithmStrings.AlgorithmRequiresKey),
+            ErrorCategory.InvalidArgument,
+            algorithm);
+        cmdlet.ThrowTerminatingError(errorRecord);
+    }
 }

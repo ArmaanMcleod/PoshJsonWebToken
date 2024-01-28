@@ -16,19 +16,25 @@ public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
     /// <summary>
     /// The payload to encode into JWT token.
     /// </summary>
-    [Parameter(Mandatory = true)]
+    [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
     public Hashtable Payload { get; set; }
 
     /// <summary>
     /// The hash algorithm used to encode JWT token.
     /// </summary>
-    [Parameter(Mandatory = true)]
+    [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
     public JwsAlgorithm Algorithm { get; set; }
 
     /// <summary>
     /// The extra headers used to encode JWT token.
     /// </summary>
-    [Parameter(Mandatory = false)]
+    [Parameter(Mandatory = false, ParameterSetName = SecretKeyParameterSet)]
+    [Parameter(Mandatory = false, ParameterSetName = CertificateParameterSet)]
+    [Parameter(Mandatory = false, ParameterSetName = NoneParameterSet)]
     public Hashtable ExtraHeader { get; set; }
 
     #endregion Parameters
