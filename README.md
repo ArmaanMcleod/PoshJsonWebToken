@@ -5,15 +5,15 @@ Another PowerShell module for generating and validating JWT tokens.
 While there are a few other JWT PowerShell modules on the gallery this module includes the following features:
 
 + Broad hash algorithm support:
-  + HS256
-  + HS384
-  + HS512
-  + RS256
-  + RS384
-  + RS512
-  + ES256
-  + ES384
-  + ES512
+  + `HS256` - HMAC with SHA-256
+  + `HS384` - HMAC with SHA-384
+  + `HS512` - HMAC with SHA-512
+  + `RS256` - RSA Signature with SHA-256
+  + `RS384` - RSA Signature with SHA-384
+  + `RS512` - RSA Signature with SHA-512
+  + `ES256` - P-256 curve and SHA-256
+  + `ES384` - P-384 curve and SHA-384
+  + `ES512` - P-512 curve and SHA-512
 
 + Uses the ultimate [`jose-jwt`](https://www.nuget.org/packages/jose-jwt/) nuget package to get a wide variety of builtin JWT support into PowerShell.
 
@@ -36,7 +36,7 @@ $secretKey = 'abc' | ConvertTo-SecureString -AsPlainText -Force
 $algorithm = 'HS256'
 
 # Generate JWT token
-$token = New-JsonWebToken -Payload $Payload -Algorithm $algorithm -SecretKey $SecretKey -ExtraHeader $ExtraHeader
+$token = New-JsonWebToken -Payload $Payload -Algorithm $algorithm -SecretKey $SecretKey -ExtraHeader $header
 
 # Validate JWT token
 Test-JsonWebToken -Token $token -SecretKey $SecretKey -Algorithm $algorithm
@@ -53,7 +53,7 @@ $certificatePath = Resolve-Path -Path 'cert.p12'
 $certificate = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certificatePath)
 
 # Generate JWT token
-$token = New-JsonWebToken -Payload $Payload -Algorithm $algorithm -Certificate $certificate -ExtraHeader $ExtraHeader
+$token = New-JsonWebToken -Payload $Payload -Algorithm $algorithm -Certificate $certificate -ExtraHeader $header
 
 # Validate JWT token
 Test-JsonWebToken -Token $token -Certificate $certificate -Algorithm $algorithm
