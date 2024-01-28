@@ -82,7 +82,7 @@ jobs:
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always() && ${{ matrix.info.os == 'ubuntu-latest' }}
+        if: always() && (${{ matrix.info.os == 'ubuntu-latest' }})
         with:
           check_name: Unit Test Results (${{ matrix.info.name }})
           files: |
@@ -90,7 +90,7 @@ jobs:
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
-        if: always() && ${{ matrix.info.os != 'ubuntu-latest' }}
+        if: always() && (${{ matrix.info.os != 'ubuntu-latest' }})
         with:
           check_name: Unit Test Results (${{ matrix.info.name }})
           files: |
