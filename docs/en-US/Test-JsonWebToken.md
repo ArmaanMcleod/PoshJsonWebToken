@@ -27,6 +27,13 @@ Test-JsonWebToken -Token <SecureString> -Algorithm <JwsAlgorithm> -Certificate <
  [<CommonParameters>]
 ```
 
+### None
+
+```powershell
+New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <Hashtable>]
+ [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
 The `Test-JsonWebToken` cmdlet can be used to ensure Json Web Token (JWT) is valid.
@@ -93,6 +100,7 @@ Validates signed JWT token using certificate and RS256 algorithm.
 
 The hash algorithm.
 Currently PS256, PS384 and PS512 algorithms are not supported.
+If `none` is used, a warning message is displayed indicating plain text algorithm is used without integrity protection.
 
 ```yaml
 Type: JwsAlgorithm

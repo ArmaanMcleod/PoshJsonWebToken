@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Jose;
 using PoshJsonWebToken.Common;
+using PoshJsonWebToken.Resources;
 
 namespace PoshJsonWebToken.Commands;
 
@@ -15,8 +16,9 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
 {
     #region Parameter Sets
 
-    private const string SecretKeyParameterSet = "SecretKey";
-    private const string CertificateParameterSet = "Certificate";
+    protected const string NoneParameterSet = "None";
+    protected const string SecretKeyParameterSet = "SecretKey";
+    protected const string CertificateParameterSet = "Certificate";
 
     #endregion Parameter Sets
 
@@ -45,9 +47,22 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
     /// <returns>The signing key object.</returns>
     protected object GetTokenSigningKey(JwsAlgorithm algorithm)
     {
-        var algorithmFamily = AlgorithmHelpers.GetAlgorithmFamily(algorithm);
-
         object key = null;
+
+        if (ParameterSetName.Equals(NoneParameterSet, StringComparison.OrdinalIgnoreCase))
+        {
+            if (algorithm == JwsAlgorithm.none)
+            {
+                WriteWarning(AlgorithmStrings.NoneAlgorithmWarning);
+                return key;
+            }
+            else
+            {
+                AlgorithmHelpers.ReportAlgorithmWithoutKey(this, algorithm);
+            }
+        }
+
+        var algorithmFamily = AlgorithmHelpers.GetAlgorithmFamily(algorithm);
 
         if (ParameterSetName.Equals(SecretKeyParameterSet, StringComparison.OrdinalIgnoreCase))
         {

@@ -27,6 +27,13 @@ New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <H
  -Certificate <X509Certificate2> [<CommonParameters>]
 ```
 
+### None
+
+```powershell
+New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <Hashtable>]
+ [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
 The `New-JsonWebToken` cmdlet can be used to create a new Json Web Token (JWT) using a secret key or certificate.
@@ -86,6 +93,7 @@ Creating a RS256 JWT token using certificate.
 
 The hash algorithm.
 Currently PS256, PS384 and PS512 algorithms are not supported.
+If `none` is used, a warning message is displayed indicating plain text algorithm is used without integrity protection.
 
 ```yaml
 Type: JwsAlgorithm

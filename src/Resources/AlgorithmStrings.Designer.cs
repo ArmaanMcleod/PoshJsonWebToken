@@ -45,7 +45,7 @@ namespace PoshJsonWebToken.Resources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PoshJsonWebToken.resources.AlgorithmStrings", typeof(AlgorithmStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PoshJsonWebToken.Resources.AlgorithmStrings", typeof(AlgorithmStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,13 +70,35 @@ namespace PoshJsonWebToken.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The algorithm &apos;{0}&apos; requires a key using -SecretKey or -Certificate parameters..
+        /// </summary>
+        internal static string AlgorithmRequiresKey
+        {
+            get
+            {
+                return ResourceManager.GetString("AlgorithmRequiresKey", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Certificate parameter requires any one of &apos;{0}&apos; algorithms..
-        /// /// </summary>
+        /// </summary>
         internal static string CertificateRequiredAlgorithms
         {
             get
             {
                 return ResourceManager.GetString("CertificateRequiredAlgorithms", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Using NONE (unprotected) plain text algorithm without integrity protection..
+        /// </summary>
+        internal static string NoneAlgorithmWarning
+        {
+            get
+            {
+                return ResourceManager.GetString("NoneAlgorithmWarning", resourceCulture);
             }
         }
 
