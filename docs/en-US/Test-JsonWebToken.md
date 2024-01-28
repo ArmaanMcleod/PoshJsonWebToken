@@ -93,6 +93,7 @@ Validates signed JWT token using certificate and RS256 algorithm.
 
 The hash algorithm.
 Currently PS256, PS384 and PS512 algorithms are not supported.
+If `none` is used, a warning message is displayed indicating plain text algorithm is used without integrity protection.
 
 ```yaml
 Type: JwsAlgorithm
