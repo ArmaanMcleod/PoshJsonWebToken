@@ -40,6 +40,12 @@ task Publish {
     }
 }
 
+task Docs {
+    $docsPath = Join-Path -Path $PSScriptRoot -ChildPath 'docs' -AdditionalChildPath 'en-US'
+    $outputPath = Join-Path -Path $ReleasePath -ChildPath 'en-US'
+    New-ExternalHelp -Path $docsPath -OutputPath $outputPath | Out-Null
+}
+
 task Package {
     $nupkgPath = Join-Path -Path $BuildPath -ChildPath "$ModuleName.$ModuleVersion.nupkg"
     if (Test-Path -Path $nupkgPath) {
@@ -91,7 +97,7 @@ task RunPesterTests {
     Invoke-Pester -Configuration $configuration
 }
 
-task Build -Jobs Clean, Publish, Package
+task Build -Jobs Clean, Publish, Docs, Package
 
 task Test -Jobs Publish, RunPesterTests
 
