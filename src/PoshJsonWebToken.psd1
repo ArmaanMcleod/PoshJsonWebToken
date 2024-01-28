@@ -13,6 +13,10 @@
     )
     PrivateData          = @{
         PSData = @{
+            Tags         = @(
+                'JWT'
+                'JsonWebToken'
+            )
             LicenseUri   = 'https://github.com/ArmaanMcleod/PoshJsonWebToken/blob/main/LICENSE'
             ProjectUri   = 'https://github.com/ArmaanMcleod/PoshJsonWebToken'
             ReleaseNotes = 'See https://github.com/ArmaanMcleod/PoshJsonWebToken/blob/main/CHANGELOG.md'
