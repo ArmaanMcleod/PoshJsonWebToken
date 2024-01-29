@@ -14,7 +14,7 @@
 ## v.1.0.1 - 27/01/2024
 
 + Minor fixes with PSGallery Publish automation #2.
-  + Added action: write permission to publish workflow so it can read artifacts.
+  + Added `action: write` permission to publish workflow so it can read artifacts.
 + Add more documentation to code #3.
   + Added XML to C# code in particular.
 
