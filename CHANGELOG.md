@@ -1,5 +1,9 @@
 # Changelog for PoshJsonWebToken
 
+## Unreleased
+
++ Moved `-Algorithm` parameter to base class and changed type from `JwsAlgorithm` to `string` #16.
+
 ## v.1.0.2 - 29/01/2024
 
 + Add PlatyPS generated markdown for help #5.
@@ -20,5 +24,4 @@
 
 ## v.1.0.0 - 27/01/2024
 
-+ Initial version of the `PoshJsonWebToken` module.
-+ Add initial cmdlets by @ArmaanMcleod in #1.
++ Initial version of the `PoshJsonWebToken` module #1.
