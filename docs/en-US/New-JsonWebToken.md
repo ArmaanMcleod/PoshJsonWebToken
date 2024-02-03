@@ -96,7 +96,7 @@ Currently PS256, PS384 and PS512 algorithms are not supported.
 If `none` is used, a warning message is displayed indicating plain text algorithm is used without integrity protection.
 
 ```yaml
-Type: JwsAlgorithm
+Type: String
 Parameter Sets: (All)
 Aliases:
 Accepted values: none, HS256, HS384, HS512, RS256, RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
