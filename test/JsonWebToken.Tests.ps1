@@ -206,18 +206,39 @@ Describe 'JsonWebToken Tests' {
             $secretKey = 'abc' | ConvertTo-SecureString -AsPlainText -Force
             $certificatePath = Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Certificates' -AdditionalChildPath 'RS256', 'certificate.p12')
             $x509Certificate = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certificatePath)
+            $token = 'abc123' | ConvertTo-SecureString -AsPlainText -Force
         }
 
         It 'Should throw an exception if incompatible algorithm RS256 is used with -SecretKey' {
-            { New-JsonWebToken -Payload $payload -Algorithm 'RS256' -SecretKey $secretKey } | Should -Throw -ErrorId 'SecretRequiredAlgorithms,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+            { New-JsonWebToken -Payload $payload -Algorithm 'RS256' -SecretKey $secretKey }
+            | Should -Throw -ErrorId 'SecretRequiredAlgorithms,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+
+            { Test-JsonWebToken -Token $token -Algorithm 'RS256' -SecretKey $secretKey }
+            | Should -Throw -ErrorId 'SecretRequiredAlgorithms,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
         }
 
         It 'Should throw an exception if incompatible algorithm HS256 is used with -Certificate' {
-            { New-JsonWebToken -Payload $payload -Algorithm 'HS256' -Certificate $x509Certificate } | Should -Throw -ErrorId 'CertificateRequiredAlgorithms,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+            { New-JsonWebToken -Payload $payload -Algorithm 'HS256' -Certificate $x509Certificate }
+            | Should -Throw -ErrorId 'CertificateRequiredAlgorithms,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+
+            { Test-JsonWebToken -Token $token -Algorithm 'HS256' -Certificate $x509Certificate }
+            | Should -Throw -ErrorId 'CertificateRequiredAlgorithms,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
         }
 
         It 'Should throw an exception if algorithm is used without -SecretKey or -Certificate parameter' {
-            { New-JsonWebToken -Payload $payload -Algorithm 'HS256' } | Should -Throw -ErrorId 'AlgorithmRequiresKey,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+            { New-JsonWebToken -Payload $payload -Algorithm 'HS256' }
+            | Should -Throw -ErrorId 'AlgorithmRequiresKey,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+
+            { Test-JsonWebToken -Token $token -Algorithm 'HS256' }
+            | Should -Throw -ErrorId 'AlgorithmRequiresKey,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
+        }
+
+        It 'Show throw an exception if algorithm is invalid' {
+            { New-JsonWebToken -Payload $payload -Algorithm 'Invalid' }
+            | Should -Throw -ErrorId 'InvalidAlgorithm,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+
+            { Test-JsonWebToken -Token $token -Algorithm 'Invalid' }
+            | Should -Throw -ErrorId 'InvalidAlgorithm,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
         }
     }
 }

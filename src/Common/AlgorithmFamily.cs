@@ -1,6 +1,6 @@
 namespace PoshJsonWebToken.Common;
 
-internal enum AlgorithmFamily
+internal enum JwsAlgorithmFamily
 {
     HS,
     RS,

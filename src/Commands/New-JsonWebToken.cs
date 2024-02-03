@@ -22,14 +22,6 @@ public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
     public Hashtable Payload { get; set; }
 
     /// <summary>
-    /// The hash algorithm used to encode JWT token.
-    /// </summary>
-    [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
-    [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
-    [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
-    public JwsAlgorithm Algorithm { get; set; }
-
-    /// <summary>
     /// The extra headers used to encode JWT token.
     /// </summary>
     [Parameter(Mandatory = false, ParameterSetName = SecretKeyParameterSet)]
@@ -46,13 +38,20 @@ public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
     /// </summary>
     protected override void ProcessRecord()
     {
-        string token = JWT.Encode(
-            payload: Payload.ToDictionary<string, object>(),
-            GetTokenSigningKey(Algorithm),
-            Algorithm,
-            extraHeaders: ExtraHeader?.ToDictionary<string, object>());
+        if (AlgorithmHelpers.TryParseJwsAlgorithm(Algorithm, out JwsAlgorithm jwsAlgorithm))
+        {
+            string token = JWT.Encode(
+                payload: Payload.ToDictionary<string, object>(),
+                GetTokenSigningKey(jwsAlgorithm),
+                jwsAlgorithm,
+                extraHeaders: ExtraHeader?.ToDictionary<string, object>());
 
-        WriteObject(token.ToSecureString());
+            WriteObject(token.ToSecureString());
+        }
+        else
+        {
+            AlgorithmHelpers.ReportInvalidAlgorithm(this, Algorithm);
+        }
     }
 
     #endregion Overrides

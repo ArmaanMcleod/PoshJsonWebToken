@@ -25,6 +25,14 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
     #region Parameters
 
     /// <summary>
+    /// The hash algorithm used to encode JWT token.
+    /// </summary>
+    [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
+    [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
+    public string Algorithm { get; set; }
+
+    /// <summary>
     /// Secure key used for signing JWT token.
     /// </summary>
     [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
@@ -41,7 +49,7 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
     #region Protected Members
 
     /// <summary>
-    /// Method used to determine hash algorithm hash signing key.
+    /// Method used to determine Json Web Signature (JWS) hash algorithm hash signing key.
     /// </summary>
     /// <param name="algorithm">The hash algorithm</param>
     /// <returns>The signing key object.</returns>
@@ -62,11 +70,11 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
             }
         }
 
-        var algorithmFamily = AlgorithmHelpers.GetAlgorithmFamily(algorithm);
+        var algorithmFamily = AlgorithmHelpers.GetJwsAlgorithmFamily(algorithm);
 
         if (ParameterSetName.Equals(SecretKeyParameterSet, StringComparison.OrdinalIgnoreCase))
         {
-            if (algorithmFamily == AlgorithmFamily.HS)
+            if (algorithmFamily == JwsAlgorithmFamily.HS)
             {
                 key = Encoding.UTF8.GetBytes(SecretKey.ToPlainText());
             }
@@ -77,11 +85,11 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
         }
         else if (ParameterSetName.Equals(CertificateParameterSet, StringComparison.OrdinalIgnoreCase))
         {
-            if (algorithmFamily == AlgorithmFamily.RS)
+            if (algorithmFamily == JwsAlgorithmFamily.RS)
             {
                 key = Certificate.GetRSAPrivateKey();
             }
-            else if (algorithmFamily == AlgorithmFamily.ES)
+            else if (algorithmFamily == JwsAlgorithmFamily.ES)
             {
                 key = Certificate.GetECDsaPrivateKey();
             }
