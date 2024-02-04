@@ -13,18 +13,18 @@ namespace PoshJsonWebToken.Common;
 internal static class AlgorithmHelpers
 {
     /// <summary>
-    /// Determines algorithm family an algorithm belongs to.
+    /// Determines Json Web Signature (JWS) algorithm family an algorithm belongs to.
     /// </summary>
     /// <param name="algorithm">The hash algorithm.</param>
     /// <returns>The algorithm family.</returns>
-    internal static AlgorithmFamily GetAlgorithmFamily(JwsAlgorithm algorithm)
+    internal static JwsAlgorithmFamily GetJwsAlgorithmFamily(JwsAlgorithm algorithm)
     {
         return algorithm switch
         {
-            JwsAlgorithm.HS256 or JwsAlgorithm.HS384 or JwsAlgorithm.HS512 => AlgorithmFamily.HS,
-            JwsAlgorithm.RS256 or JwsAlgorithm.RS384 or JwsAlgorithm.RS512 => AlgorithmFamily.RS,
-            JwsAlgorithm.ES256 or JwsAlgorithm.ES384 or JwsAlgorithm.ES512 => AlgorithmFamily.ES,
-            _ => AlgorithmFamily.Unknown,
+            JwsAlgorithm.HS256 or JwsAlgorithm.HS384 or JwsAlgorithm.HS512 => JwsAlgorithmFamily.HS,
+            JwsAlgorithm.RS256 or JwsAlgorithm.RS384 or JwsAlgorithm.RS512 => JwsAlgorithmFamily.RS,
+            JwsAlgorithm.ES256 or JwsAlgorithm.ES384 or JwsAlgorithm.ES512 => JwsAlgorithmFamily.ES,
+            _ => JwsAlgorithmFamily.Unknown,
         };
     }
 
@@ -93,4 +93,43 @@ internal static class AlgorithmHelpers
             algorithm);
         cmdlet.ThrowTerminatingError(errorRecord);
     }
+
+    /// <summary>
+    /// Throws an exception if invalid algorithm is used.
+    /// </summary>
+    /// <param name="cmdlet">The cmdlet.</param>
+    /// <param name="algorithm">The invalid algorithm.</param>
+    internal static void ReportInvalidAlgorithm(PSCmdlet cmdlet, string algorithm)
+    {
+        var algorithms = string.Join(
+            ",",
+            JwsAlgorithm.none,
+            JwsAlgorithm.HS256,
+            JwsAlgorithm.HS384,
+            JwsAlgorithm.HS512,
+            JwsAlgorithm.RS256,
+            JwsAlgorithm.RS384,
+            JwsAlgorithm.RS512,
+            JwsAlgorithm.ES256,
+            JwsAlgorithm.ES384,
+            JwsAlgorithm.ES512);
+
+        var errorMessage = string.Format(AlgorithmStrings.InvalidAlgorithm, algorithms);
+        var exception = new ArgumentException(errorMessage);
+        var errorRecord = new ErrorRecord(
+            exception,
+            nameof(AlgorithmStrings.InvalidAlgorithm),
+            ErrorCategory.InvalidArgument,
+            algorithm);
+        cmdlet.ThrowTerminatingError(errorRecord);
+    }
+
+    /// <summary>
+    /// Parses string algorithm into JWS algorithm type.
+    /// </summary>
+    /// <param name="algorithm">The algorithm to parse.</param>
+    /// <param name="jwsAlgorithm">The parsed JWS algorithm.</param>
+    /// <returns>Boolean if parsing was successful.</returns>
+    internal static bool TryParseJwsAlgorithm(string algorithm, out JwsAlgorithm jwsAlgorithm)
+        => Enum.TryParse(algorithm, ignoreCase: true, out jwsAlgorithm);
 }

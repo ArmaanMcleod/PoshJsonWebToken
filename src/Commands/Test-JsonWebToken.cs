@@ -22,14 +22,6 @@ public sealed class TestJsonWebTokenCommand : JsonWebTokenCommandBase
     [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
     public SecureString Token { get; set; }
 
-    /// <summary>
-    /// The hash algorithm used to encode JWT token.
-    /// </summary>
-    [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
-    [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
-    [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
-    public JwsAlgorithm Algorithm { get; set; }
-
     #endregion Parameters
 
     #region Overrides
@@ -43,8 +35,20 @@ public sealed class TestJsonWebTokenCommand : JsonWebTokenCommandBase
 
         try
         {
-            JWT.Decode(Token.ToPlainText(), GetTokenSigningKey(Algorithm), Algorithm);
+            if (AlgorithmHelpers.TryParseJwsAlgorithm(Algorithm, out JwsAlgorithm jwsAlgorithm))
+            {
+                JWT.Decode(Token.ToPlainText(), GetTokenSigningKey(jwsAlgorithm), jwsAlgorithm);
+            }
+            else
+            {
+                AlgorithmHelpers.ReportInvalidAlgorithm(this, Algorithm);
+            }
+
             result = true;
+        }
+        catch (PipelineStoppedException)
+        {
+            throw;
         }
         catch (Exception exception)
         {
