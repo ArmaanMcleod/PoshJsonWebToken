@@ -233,11 +233,25 @@ Describe 'JsonWebToken Tests' {
             | Should -Throw -ErrorId 'AlgorithmRequiresKey,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
         }
 
-        It 'Show throw an exception if algorithm is invalid' {
+        It 'Should throw an exception if algorithm is invalid' {
             { New-JsonWebToken -Payload $payload -Algorithm 'Invalid' }
             | Should -Throw -ErrorId 'InvalidAlgorithm,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
 
             { Test-JsonWebToken -Token $token -Algorithm 'Invalid' }
+            | Should -Throw -ErrorId 'InvalidAlgorithm,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
+        }
+
+        It "Should throw an exception if '<Algorithm>' algorithm is used" -TestCases @(
+            @{ Algorithm = 'PS256' }
+            @{ Algorithm = 'PS384' }
+            @{ Algorithm = 'PS512' }
+        ) {
+            param($Algorithm)
+
+            { New-JsonWebToken -Payload $payload -Algorithm $Algorithm }
+            | Should -Throw -ErrorId 'InvalidAlgorithm,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
+
+            { Test-JsonWebToken -Token $token -Algorithm $Algorithm }
             | Should -Throw -ErrorId 'InvalidAlgorithm,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
         }
     }
