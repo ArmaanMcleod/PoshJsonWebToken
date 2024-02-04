@@ -70,24 +70,24 @@ namespace PoshJsonWebToken.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The algorithm &apos;{0}&apos; requires a key using -SecretKey or -Certificate parameters..
+        ///   Looks up a localized string similar to Certificate parameter requires any one of &apos;{0}&apos; JWE algorithms..
         /// </summary>
-        internal static string AlgorithmRequiresKey
+        internal static string CertificateRequiredJweAlgorithms
         {
             get
             {
-                return ResourceManager.GetString("AlgorithmRequiresKey", resourceCulture);
+                return ResourceManager.GetString("CertificateRequiredJweAlgorithms", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Certificate parameter requires any one of &apos;{0}&apos; algorithms..
+        ///   Looks up a localized string similar to Certificate parameter requires any one of &apos;{0}&apos; JWS algorithms..
         /// </summary>
-        internal static string CertificateRequiredAlgorithms
+        internal static string CertificateRequiredJwsAlgorithms
         {
             get
             {
-                return ResourceManager.GetString("CertificateRequiredAlgorithms", resourceCulture);
+                return ResourceManager.GetString("CertificateRequiredJwsAlgorithms", resourceCulture);
             }
         }
 
@@ -103,24 +103,68 @@ namespace PoshJsonWebToken.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Using NONE (unprotected) plain text algorithm without integrity protection..
+        ///   Looks up a localized string similar to Encryption parameter requires any one of &apos;{0}&apos; JWE encryptions..
         /// </summary>
-        internal static string NoneAlgorithmWarning
+        internal static string InvalidJweEncryption
         {
             get
             {
-                return ResourceManager.GetString("NoneAlgorithmWarning", resourceCulture);
+                return ResourceManager.GetString("InvalidJweEncryption", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Secret parameter requires any one of &apos;{0}&apos; algorithms..
+        ///   Looks up a localized string similar to Encryption parameter requires any one of &apos;{0}&apos; JWE algorithms..
         /// </summary>
-        internal static string SecretRequiredAlgorithms
+        internal static string JweEncryptionRequiredWithJweAlgorithm
         {
             get
             {
-                return ResourceManager.GetString("SecretRequiredAlgorithms", resourceCulture);
+                return ResourceManager.GetString("JweEncryptionRequiredWithJweAlgorithm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The JWS algorithm &apos;{0}&apos; requires a key using -SecretKey or -Certificate parameters..
+        /// </summary>
+        internal static string JwsAlgorithmRequiresKey
+        {
+            get
+            {
+                return ResourceManager.GetString("JwsAlgorithmRequiresKey", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Using NONE (unprotected) plain text JWS algorithm without integrity protection..
+        /// </summary>
+        internal static string NoneJwsAlgorithmWarning
+        {
+            get
+            {
+                return ResourceManager.GetString("NoneJwsAlgorithmWarning", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Secret parameter requires any one of &apos;{0}&apos; JWE algorithms..
+        /// </summary>
+        internal static string SecretRequiredJweAlgorithms
+        {
+            get
+            {
+                return ResourceManager.GetString("SecretRequiredJweAlgorithms", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Secret parameter requires any one of &apos;{0}&apos; JWS algorithms..
+        /// </summary>
+        internal static string SecretRequiredJwsAlgorithms
+        {
+            get
+            {
+                return ResourceManager.GetString("SecretRequiredJwsAlgorithms", resourceCulture);
             }
         }
     }

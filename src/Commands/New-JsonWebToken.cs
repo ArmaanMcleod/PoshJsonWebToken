@@ -38,15 +38,36 @@ public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
     /// </summary>
     protected override void ProcessRecord()
     {
+        var payloadDictionary = Payload.ToDictionary<string, object>();
+        var extraHeaders = ExtraHeader?.ToDictionary<string, object>();
+
         if (AlgorithmHelpers.TryParseJwsAlgorithm(Algorithm, out JwsAlgorithm jwsAlgorithm))
         {
             string token = JWT.Encode(
-                payload: Payload.ToDictionary<string, object>(),
-                GetTokenSigningKey(jwsAlgorithm),
-                jwsAlgorithm,
-                extraHeaders: ExtraHeader?.ToDictionary<string, object>());
+                payload: payloadDictionary,
+                key: GetTokenSigningKey(jwsAlgorithm),
+                algorithm: jwsAlgorithm,
+                extraHeaders: extraHeaders);
 
             WriteObject(token.ToSecureString());
+        }
+        else if (AlgorithmHelpers.TryParseJweAlgorithm(Algorithm, out JweAlgorithm jweAlgorithm))
+        {
+            if (AlgorithmHelpers.TryParseJweEncryption(Encryption, out JweEncryption jweEncryption))
+            {
+                string token = JWT.Encode(
+                    payload: payloadDictionary,
+                    key: GetTokenEncryptionKey(jweAlgorithm),
+                    alg: jweAlgorithm,
+                    enc: jweEncryption,
+                    extraHeaders: extraHeaders);
+
+                WriteObject(token.ToSecureString());
+            }
+            else
+            {
+                AlgorithmHelpers.ReportInvalidJweEncryption(this, Encryption);
+            }
         }
         else
         {

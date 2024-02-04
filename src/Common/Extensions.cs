@@ -19,9 +19,10 @@ internal static class Extensions
     /// <typeparam name="K">The key type.</typeparam>
     /// <typeparam name="V">The value type.</typeparam>
     /// <returns>Dictionary with K, V types.</returns>
-    internal static Dictionary<K, V> ToDictionary<K, V>(this Hashtable table) => table
-        .Cast<DictionaryEntry>()
-        .ToDictionary(kvp => (K)kvp.Key, kvp => (V)kvp.Value);
+    internal static Dictionary<K, V> ToDictionary<K, V>(this Hashtable table)
+        => table
+            .Cast<DictionaryEntry>()
+            .ToDictionary(kvp => (K)kvp.Key, kvp => (V)kvp.Value);
 
     /// <summary>
     /// Converts secure string to plain text string.
@@ -80,11 +81,11 @@ internal static class Extensions
     /// <returns>Boolean if character is single quote.</returns>
     internal static bool IsSingleQuote(this char c)
     {
-        return c == '\''
-            || c == QuoteChars.QuoteSingleLeft
-            || c == QuoteChars.QuoteSingleRight
-            || c == QuoteChars.QuoteSingleBase
-            || c == QuoteChars.QuoteReversed;
+        return c is '\''
+            or QuoteChars.QuoteSingleLeft
+            or QuoteChars.QuoteSingleRight
+            or QuoteChars.QuoteSingleBase
+            or QuoteChars.QuoteReversed;
     }
 
     /// Return true if the character is double quote.
@@ -93,9 +94,9 @@ internal static class Extensions
     /// <returns>Boolean if character is double quote.</returns>
     internal static bool IsDoubleQuote(this char c)
     {
-        return c == '"'
-            || c == QuoteChars.QuoteDoubleLeft
-            || c == QuoteChars.QuoteDoubleRight
-            || c == QuoteChars.QuoteLowDoubleLeft;
+        return c is '"'
+            or QuoteChars.QuoteDoubleLeft
+            or QuoteChars.QuoteDoubleRight
+            or QuoteChars.QuoteLowDoubleLeft;
     }
 }

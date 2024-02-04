@@ -37,7 +37,25 @@ public sealed class TestJsonWebTokenCommand : JsonWebTokenCommandBase
         {
             if (AlgorithmHelpers.TryParseJwsAlgorithm(Algorithm, out JwsAlgorithm jwsAlgorithm))
             {
-                JWT.Decode(Token.ToPlainText(), GetTokenSigningKey(jwsAlgorithm), jwsAlgorithm);
+                JWT.Decode(
+                    token: Token.ToPlainText(),
+                    key: GetTokenSigningKey(jwsAlgorithm),
+                    alg: jwsAlgorithm);
+            }
+            else if (AlgorithmHelpers.TryParseJweAlgorithm(Algorithm, out JweAlgorithm jweAlgorithm))
+            {
+                if (AlgorithmHelpers.TryParseJweEncryption(Encryption, out JweEncryption jweEncryption))
+                {
+                    JWT.Decode(
+                        token: Token.ToPlainText(),
+                        key: GetTokenEncryptionKey(jweAlgorithm),
+                        alg: jweAlgorithm,
+                        enc: jweEncryption);
+                }
+                else
+                {
+                    AlgorithmHelpers.ReportInvalidJweEncryption(this, Encryption);
+                }
             }
             else
             {

@@ -117,19 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CertificateRequiredAlgorithms" xml:space="preserve">
-    <value>Certificate parameter requires any one of '{0}' algorithms.</value>
+  <data name="CertificateRequiredJwsAlgorithms" xml:space="preserve">
+    <value>Certificate parameter requires any one of '{0}' JWS algorithms.</value>
   </data>
-  <data name="SecretRequiredAlgorithms" xml:space="preserve">
-    <value>Secret parameter requires any one of '{0}' algorithms.</value>
+  <data name="SecretRequiredJwsAlgorithms" xml:space="preserve">
+    <value>Secret parameter requires any one of '{0}' JWS algorithms.</value>
   </data>
-  <data name="NoneAlgorithmWarning" xml:space="preserve">
-    <value>Using NONE (unprotected) plain text algorithm without integrity protection.</value>
+  <data name="NoneJwsAlgorithmWarning" xml:space="preserve">
+    <value>Using NONE (unprotected) plain text JWS algorithm without integrity protection.</value>
   </data>
-  <data name="AlgorithmRequiresKey" xml:space="preserve">
-    <value>The algorithm '{0}' requires a key using -SecretKey or -Certificate parameters.</value>
+  <data name="JwsAlgorithmRequiresKey" xml:space="preserve">
+    <value>The JWS algorithm '{0}' requires a key using -SecretKey or -Certificate parameters.</value>
   </data>
   <data name="InvalidAlgorithm" xml:space="preserve">
     <value>Algorithm parameter requires any one of '{0}' algorithms.</value>
+  </data>
+  <data name="JweEncryptionRequiredWithJweAlgorithm" xml:space="preserve">
+    <value>Encryption parameter requires any one of '{0}' JWE algorithms.</value>
+  </data>
+  <data name="InvalidJweEncryption" xml:space="preserve">
+    <value>Encryption parameter requires any one of '{0}' JWE encryptions.</value>
+  </data>
+  <data name="CertificateRequiredJweAlgorithms" xml:space="preserve">
+    <value>Certificate parameter requires any one of '{0}' JWE algorithms.</value>
+  </data>
+  <data name="SecretRequiredJweAlgorithms" xml:space="preserve">
+    <value>Secret parameter requires any one of '{0}' JWE algorithms.</value>
   </data>
 </root>
