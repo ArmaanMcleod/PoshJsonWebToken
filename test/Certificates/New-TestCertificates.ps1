@@ -12,7 +12,7 @@ New-Item -Path $folderPath -ItemType Directory -Force
 $privateKeyPath = Join-Path -Path $folderPath -ChildPath privatekey.pem
 $publicKeyPath = Join-Path -Path $folderPath -ChildPath publickey.pem
 $selfSignedCertificatePath = Join-Path -Path $folderPath -ChildPath certificate.crt
-$pkcsFormatCertificatePath = Join-Path -Path $folderPath -ChildPath certificate.pfx
+$pkcsFormatCertificatePath = Join-Path -Path $folderPath -ChildPath certificate.p12
 
 if ($Algorithm -eq 'RS256') {
     openssl genrsa -aes256 -out $privateKeyPath -passout pass:'' 2048
