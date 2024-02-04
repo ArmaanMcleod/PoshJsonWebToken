@@ -131,5 +131,18 @@ internal static class AlgorithmHelpers
     /// <param name="jwsAlgorithm">The parsed JWS algorithm.</param>
     /// <returns>Boolean if parsing was successful.</returns>
     internal static bool TryParseJwsAlgorithm(string algorithm, out JwsAlgorithm jwsAlgorithm)
-        => Enum.TryParse(algorithm, ignoreCase: true, out jwsAlgorithm);
+    {
+        if (Enum.TryParse(algorithm, ignoreCase: true, out jwsAlgorithm))
+        {
+            // Exclude PS* algorithms since they are unsupported in this module.
+            if (jwsAlgorithm is JwsAlgorithm.PS256 or JwsAlgorithm.PS384 or JwsAlgorithm.PS512)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }
