@@ -9,51 +9,34 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Creates a signed Json Web Token (JWT).
+Creates a signed or encrypted Json Web Token (JWT).
 
 ## SYNTAX
 
 ### SecretKey
 
-```powershell
-New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <Hashtable>]
+```
+New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
  -SecretKey <SecureString> [<CommonParameters>]
 ```
 
 ### Certificate
 
-```powershell
-New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <Hashtable>]
- -Certificate <X509Certificate2> [<CommonParameters>]
+```
+New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
+ -Certificate <X509Certificate2> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### None
 
-```powershell
-New-JsonWebToken -Payload <Hashtable> -Algorithm <JwsAlgorithm> [-ExtraHeader <Hashtable>]
+```
+New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-The `New-JsonWebToken` cmdlet can be used to create a new Json Web Token (JWT) using a secret key or certificate.
-
-The following symmetric hash algorithms support secret key:
-
-+ `HS256` - HMAC with SHA-256
-+ `HS384` - HMAC with SHA-384
-+ `HS512` - HMAC with SHA-512
-
-The following asymmetric hash algorithms support certificates:
-
-+ `RS256` - RSA Signature with SHA-256
-+ `RS384` - RSA Signature with SHA-384
-+ `RS512` - RSA Signature with SHA-512
-+ `ES256` - P-256 curve and SHA-256
-+ `ES384` - P-384 curve and SHA-384
-+ `ES512` - P-512 curve and SHA-512
-
-The above algorithms have their advantages and disadvantages, depending on the use case and the level of security required.
+The `New-JsonWebToken` cmdlet can be used to create a new signed or encrypted Json Web Token (JWT) using a secret key or certificate.
 
 ## EXAMPLES
 
@@ -87,19 +70,39 @@ $token = New-JsonWebToken -Payload $Payload -Algorithm $algorithm -Certificate $
 
 Creating a RS256 JWT token using certificate.
 
+### Example 3
+
+```powershell
+$payload = @{ 'a' = 'b' }
+$header = @{ 'exp' = 1300819380 }
+$algorithm = 'RSA_OAEP'
+$encryption = 'A256GCM'
+
+$certificatePath = Resolve-Path -Path 'cert.p12'
+$certificate = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certificatePath)
+
+# Generate JWT token
+$token = New-JsonWebToken -Payload $Payload -Algorithm $algorithm -Encryption $encryption -Certificate $certificate -ExtraHeader $header
+
+# Validate JWT token
+Test-JsonWebToken -Token $token -Certificate $certificate -Algorithm $algorithm -Encryption $encryption
+```
+
+Creating a RSA_OAEP encrypted JWT token with A256GCM using certificate.
+
 ## PARAMETERS
 
 ### -Algorithm
 
-The hash algorithm.
-Currently PS256, PS384 and PS512 algorithms are not supported.
-If `none` is used, a warning message is displayed indicating plain text algorithm is used without integrity protection.
+The JWS (Json Web Signature) or JWE (Json Web Encryption) hash algorithm.
+If `none` JWS algorithm is used, a warning message is displayed indicating plain text algorithm is used without integrity protection.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: none, HS256, HS384, HS512, RS256, RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
+Accepted values: none, HS256, HS384, HS512, RS256, RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512, RSA_OAEP_256, RSA_OAEP, RSA1_5, DIR, A128KW, A192KW, A256KW, A128GCMKW, A192GCMKW, A256GCMKW, PBES2_HS256_A128KW, PBES2_HS384_A192KW,
+PBES2_HS512_A256KW
 
 Required: True
 Position: Named
@@ -110,8 +113,22 @@ Accept wildcard characters: False
 
 ### -Certificate
 
-The signing certificate of type `System.Security.Cryptography.X509Certificates.X509Certificate2`.
-Must be specified and contain the private key if the algorithm is RS256, RS384, RS512, ES256, ES384 or ES512.
+The certificate used for signing or encryption.
+
+Supported JWS (Json Web Signature) algorithms:
+
++ `RS256`
++ `RS384`
++ `RS512`
++ `ES256`
++ `ES384`
++ `ES512`
+
+Supported JWE (Json Web Encryption) algorithms:
+
++ `RSA_OAEP_256`
++ `RSA_OAEP`
++ `RSA1_5`
 
 ```yaml
 Type: X509Certificate2
@@ -128,7 +145,7 @@ Accept wildcard characters: False
 ### -ExtraHeader
 
 The extra headers needed to sign JWT token.
-These headers are not including the `alg` header which is passed using `-Algorithm` parameter.
+These headers are not including the `alg` header which is passed using `-Algorithm` parameter and `enc` header which is passed using `-Encryption` parameter.
 
 ```yaml
 Type: Hashtable
@@ -160,8 +177,26 @@ Accept wildcard characters: False
 
 ### -SecretKey
 
-The HMAC secret secret key.
-Must be specified if the algorithm is HS256, HS384 or HS512.
+The secret secret key used for signing or encryption.
+
+Supported JWS (Json Web Signature) algorithms:
+
++ `HS256`
++ `HS384`
++ `HS512`
+
+Supported JWE (Json Web Encryption) algorithms:
+
++ `DIR`
++ `A128KW`
++ `A192KW`
++ `A256KW`
++ `A128GCMKW`
++ `A192GCMKW`
++ `A256GCMKW`
++ `PBES2_HS256_A128KW`
++ `PBES2_HS384_A192KW`
++ `PBES2_HS512_A256KW`
 
 ```yaml
 Type: SecureString
@@ -175,9 +210,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Encryption
+
+The encryption used for JWE (Json Web Encryption) JWT tokens.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: A128CBC_HS256, A192CBC_HS384, A256CBC_HS512, A128GCM, A192GCM, A256GCM
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
