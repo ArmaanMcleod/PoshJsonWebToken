@@ -57,4 +57,45 @@ internal static class Extensions
             }
         }
     }
+
+    /// <summary>
+    /// The possible special quote characters.
+    /// </summary>
+    private static class QuoteChars
+    {
+        // Special quotes
+        internal const char QuoteSingleLeft = (char)0x2018; // left single quotation mark
+        internal const char QuoteSingleRight = (char)0x2019; // right single quotation mark
+        internal const char QuoteSingleBase = (char)0x201a; // single low-9 quotation mark
+        internal const char QuoteReversed = (char)0x201b; // single high-reversed-9 quotation mark
+        internal const char QuoteDoubleLeft = (char)0x201c; // left double quotation mark
+        internal const char QuoteDoubleRight = (char)0x201d; // right double quotation mark
+        internal const char QuoteLowDoubleLeft = (char)0x201E; // low double left quote used in german.
+    }
+
+    /// <summary>
+    /// Return true if the character is single quote.
+    /// </summary>
+    /// <param name="c">The character.</param>
+    /// <returns>Boolean if character is single quote.</returns>
+    internal static bool IsSingleQuote(this char c)
+    {
+        return c == '\''
+            || c == QuoteChars.QuoteSingleLeft
+            || c == QuoteChars.QuoteSingleRight
+            || c == QuoteChars.QuoteSingleBase
+            || c == QuoteChars.QuoteReversed;
+    }
+
+    /// Return true if the character is double quote.
+    /// </summary>
+    /// <param name="c">The character.</param>
+    /// <returns>Boolean if character is double quote.</returns>
+    internal static bool IsDoubleQuote(this char c)
+    {
+        return c == '"'
+            || c == QuoteChars.QuoteDoubleLeft
+            || c == QuoteChars.QuoteDoubleRight
+            || c == QuoteChars.QuoteLowDoubleLeft;
+    }
 }

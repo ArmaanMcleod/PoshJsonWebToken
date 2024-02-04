@@ -30,6 +30,7 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
     [Parameter(Mandatory = true, ParameterSetName = SecretKeyParameterSet)]
     [Parameter(Mandatory = true, ParameterSetName = CertificateParameterSet)]
     [Parameter(Mandatory = true, ParameterSetName = NoneParameterSet)]
+    [ArgumentCompleter(typeof(AlgorithmCompleter))]
     public string Algorithm { get; set; }
 
     /// <summary>
