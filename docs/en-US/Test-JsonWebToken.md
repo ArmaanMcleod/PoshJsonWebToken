@@ -110,8 +110,6 @@ If `none` JWS algorithm is used, a warning message is displayed indicating plain
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: none, HS256, HS384, HS512, RS256, RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512, RSA_OAEP_256, RSA_OAEP, RSA1_5, DIR, A128KW, A192KW, A256KW, A128GCMKW, A192GCMKW, A256GCMKW, PBES2_HS256_A128KW, PBES2_HS384_A192KW,
-PBES2_HS512_A256KW
 
 Required: True
 Position: Named
@@ -210,7 +208,6 @@ The encryption used for JWE (Json Web Encryption) JWT tokens.
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: A128CBC_HS256, A192CBC_HS384, A256CBC_HS512, A128GCM, A192GCM, A256GCM
 
 Required: False
 Position: Named
