@@ -4,13 +4,13 @@
 
 ### General Cmdlet Updates and Fixes
 
-+ Moved `-Algorithm` parameter to base class and changed type from `JwsAlgorithm` to `string` (#16).
++ Moved `-Algorithm` parameter to base class and changed type from `JwsAlgorithm` to `string` (#13) (#14).
 
 ## v.1.0.2 - 29/01/2024
 
 ### General Cmdlet Updates and Fixes
 
-+ Add support for generating unprotected tokens (#9).
++ Add support for generating unprotected tokens (#7).
   + Support `none` hash algorithm if user chooses to generate an unprotected token.
   + Emit warning when this algorithm is used.
 
