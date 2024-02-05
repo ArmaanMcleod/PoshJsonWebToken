@@ -1,9 +1,9 @@
 # PoshJsonWebToken
 
-[![Test workflow](https://github.com/ArmaanMcleod/PoshJsonWebToken/workflows/Test%20PoshJsonWebToken/badge.svg)](https://github.com/ArmaanMcleod/PoshJsonWebToken/actions/workflows/ci.yml)
-[![PowerShell Gallery Latest Version](https://img.shields.io/powershellgallery/v/PoshJsonWebToken?label=PoshJsonWebToken)](https://www.powershellgallery.com/packages/PoshJsonWebToken)
-[![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/PoshJsonWebToken.svg)](https://www.powershellgallery.com/packages/PoshJsonWebToken)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ArmaanMcleod/PoshJsonWebToken/blob/main/LICENSE)
+[![GithubActionsWorkflow]][GithubActionsWorkflowYaml]
+[![PoshJsonWebToken]][PoshJsonWebTokenGallery]
+[![PoshJsonWebTokenDownloads]][PoshJsonWebTokenGallery]
+[![License]][LicenseBlob]
 
 Another PowerShell module for generating and validating JWT tokens.
 
@@ -108,3 +108,12 @@ Contributing is quite easy, fork this repo and submit a pull request with the ch
 To build this module run `.\build.ps1` in PowerShell.
 To test a build run `.\build.ps1 -Task Test` in PowerShell.
 This script will ensure all dependencies are installed before running the test suite.
+
+<!-- References -->
+[GithubActionsWorkflow]: https://github.com/ArmaanMcleod/PoshJsonWebToken/workflows/Test%20PoshJsonWebToken/badge.svg
+[GithubActionsWorkflowYaml]: https://github.com/ArmaanMcleod/PoshJsonWebToken/actions/workflows/ci.yml
+[PoshJsonWebTokenDownloads]: https://img.shields.io/powershellgallery/dt/PoshJsonWebToken
+[PoshJsonWebTokenGallery]: https://www.powershellgallery.com/packages/PoshJsonWebToken/
+[PoshJsonWebToken]: https://img.shields.io/powershellgallery/v/PoshJsonWebToken?label=PoshJsonWebToken
+[License]: https://img.shields.io/badge/license-MIT-blue.svg
+[LicenseBlob]: https://github.com/ArmaanMcleod/PoshJsonWebToken/blob/main/LICENSE
