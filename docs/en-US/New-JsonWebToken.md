@@ -14,24 +14,20 @@ Creates a signed or encrypted Json Web Token (JWT).
 ## SYNTAX
 
 ### SecretKey
-
 ```
 New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
  -SecretKey <SecureString> [<CommonParameters>]
 ```
 
 ### Certificate
-
 ```
 New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
- -Certificate <X509Certificate2> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ -Certificate <X509Certificate2> [<CommonParameters>]
 ```
 
 ### None
-
 ```
-New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
- [<CommonParameters>]
+New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -140,6 +136,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Encryption
+
+The encryption used for JWE (Json Web Encryption) JWT tokens.
+
+```yaml
+Type: String
+Parameter Sets: SecretKey, Certificate
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ExtraHeader
 
 The extra headers needed to sign JWT token.
@@ -208,24 +220,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Encryption
-
-The encryption used for JWE (Json Web Encryption) JWT tokens.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
-
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
 For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
