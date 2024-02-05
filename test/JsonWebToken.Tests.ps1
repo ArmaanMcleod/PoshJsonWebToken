@@ -621,4 +621,90 @@ Describe 'JsonWebToken Tests' {
             | Should -Throw -ErrorId 'CertificateRequiredJweAlgorithms,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
         }
     }
+
+    Context 'Parameter argument completion' {
+        BeforeDiscovery {
+            $allAlgorithms = 'none', 'HS256', 'HS384', 'HS512', 'RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512', 'RSA1_5', 'RSA_OAEP', 'RSA_OAEP_256', 'DIR', 'A128KW', 'A192KW', 'A256KW', 'PBES2_HS256_A128KW', 'PBES2_HS384_A192KW', 'PBES2_HS512_A256KW', 'A128GCMKW', 'A192GCMKW', 'A256GCMKW'
+            $hmacAlgorithms = 'HS256', 'HS384', 'HS512'
+            $ecdsaAlgorithms = 'ES256', 'ES384', 'ES512'
+            $aesAlgorithms = 'A128KW', 'A192KW', 'A256KW', 'A128GCMKW', 'A192GCMKW', 'A256GCMKW'
+            $aes128Algorithms = 'A128KW', 'A128GCMKW'
+            $pbes2Algorithm = 'PBES2_HS256_A128KW'
+
+            $allEncryptions = 'A128CBC_HS256', 'A192CBC_HS384', 'A256CBC_HS512', 'A128GCM', 'A192GCM', 'A256GCM'
+            $aes128Encryptions = 'A128CBC_HS256', 'A128GCM'
+            $aes256HmacEncryption = 'A256CBC_HS512'
+
+            function JoinStringsWithSingleQuote {
+                param($strings)
+                $strings.Split() | ForEach-Object { "'$_'" } | Join-String -Separator ' '
+            }
+        }
+
+        Context '-Algorithm parameter' {
+            It "Should complete Algorithm for '<TextInput>'" -TestCases @(
+
+                # Without Quotes
+                @{ TextInput = "New-JsonWebToken -Algorithm "; ExpectedAlgorithms = $allAlgorithms -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Algorithm "; ExpectedAlgorithms = $allAlgorithms -join ' ' }
+                @{ TextInput = "New-JsonWebToken -Algorithm HS"; ExpectedAlgorithms = $hmacAlgorithms -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Algorithm HS"; ExpectedAlgorithms = $hmacAlgorithms -join ' ' }
+                @{ TextInput = "New-JsonWebToken -Algorithm ES"; ExpectedAlgorithms = $ecdsaAlgorithms -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Algorithm ES"; ExpectedAlgorithms = $ecdsaAlgorithms -join ' ' }
+                @{ TextInput = "New-JsonWebToken -Algorithm A"; ExpectedAlgorithms = $aesAlgorithms -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Algorithm A"; ExpectedAlgorithms = $aesAlgorithms -join ' ' }
+                @{ TextInput = "New-JsonWebToken -Algorithm A128"; ExpectedAlgorithms = $aes128Algorithms -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Algorithm A128"; ExpectedAlgorithms = $aes128Algorithms -join ' ' }
+                @{ TextInput = "New-JsonWebToken -Algorithm PBES2_HS256"; ExpectedAlgorithms = $pbes2Algorithm -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Algorithm PBES2_HS256"; ExpectedAlgorithms = $pbes2Algorithm -join ' ' }
+
+                # With Quotes
+                @{ TextInput = "New-JsonWebToken -Algorithm '"; ExpectedAlgorithms = JoinStringsWithSingleQuote $allAlgorithms }
+                @{ TextInput = "Test-JsonWebToken -Algorithm '"; ExpectedAlgorithms = JoinStringsWithSingleQuote $allAlgorithms }
+                @{ TextInput = "New-JsonWebToken -Algorithm 'HS"; ExpectedAlgorithms = JoinStringsWithSingleQuote $hmacAlgorithms }
+                @{ TextInput = "Test-JsonWebToken -Algorithm 'HS"; ExpectedAlgorithms = JoinStringsWithSingleQuote $hmacAlgorithms }
+                @{ TextInput = "New-JsonWebToken -Algorithm 'ES"; ExpectedAlgorithms = JoinStringsWithSingleQuote $ecdsaAlgorithms }
+                @{ TextInput = "Test-JsonWebToken -Algorithm 'ES"; ExpectedAlgorithms = JoinStringsWithSingleQuote $ecdsaAlgorithms }
+                @{ TextInput = "New-JsonWebToken -Algorithm 'A"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aesAlgorithms }
+                @{ TextInput = "Test-JsonWebToken -Algorithm 'A"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aesAlgorithms }
+                @{ TextInput = "New-JsonWebToken -Algorithm 'A128"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aes128Algorithms }
+                @{ TextInput = "Test-JsonWebToken -Algorithm 'A128"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aes128Algorithms }
+                @{ TextInput = "New-JsonWebToken -Algorithm 'PBES2_HS256"; ExpectedAlgorithms = JoinStringsWithSingleQuote $pbes2Algorithm }
+                @{ TextInput = "Test-JsonWebToken -Algorithm 'PBES2_HS256"; ExpectedAlgorithms = JoinStringsWithSingleQuote $pbes2Algorithm }
+
+            ) {
+                param($TextInput, $ExpectedAlgorithms)
+                $res = TabExpansion2 -inputScript $TextInput -cursorColumn $TextInput.Length
+                $completionText = $res.CompletionMatches.CompletionText
+                $completionText -join ' ' | Should -BeExactly $ExpectedAlgorithms
+            }
+        }
+
+        Context '-Encryption parameter' {
+            It "Should complete Algorithm for '<TextInput>'" -TestCases @(
+
+                # Without Quotes
+                @{ TextInput = "New-JsonWebToken -Encryption "; ExpectedAlgorithms = $allEncryptions -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Encryption "; ExpectedAlgorithms = $allEncryptions -join ' ' }
+                @{ TextInput = "New-JsonWebToken -Encryption A128"; ExpectedAlgorithms = $aes128Encryptions -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Encryption A128"; ExpectedAlgorithms = $aes128Encryptions -join ' ' }
+                @{ TextInput = "New-JsonWebToken -Encryption A256CBC_HS"; ExpectedAlgorithms = $aes256HmacEncryption -join ' ' }
+                @{ TextInput = "Test-JsonWebToken -Encryption A256CBC_HS"; ExpectedAlgorithms = $aes256HmacEncryption -join ' ' }
+
+                # With Quotes
+                @{ TextInput = "New-JsonWebToken -Encryption '"; ExpectedAlgorithms = JoinStringsWithSingleQuote $allEncryptions }
+                @{ TextInput = "Test-JsonWebToken -Encryption '"; ExpectedAlgorithms = JoinStringsWithSingleQuote $allEncryptions }
+                @{ TextInput = "New-JsonWebToken -Encryption 'A128"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aes128Encryptions }
+                @{ TextInput = "Test-JsonWebToken -Encryption 'A128"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aes128Encryptions }
+                @{ TextInput = "New-JsonWebToken -Encryption 'A256CBC_HS"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aes256HmacEncryption }
+                @{ TextInput = "Test-JsonWebToken -Encryption 'A256CBC_HS"; ExpectedAlgorithms = JoinStringsWithSingleQuote $aes256HmacEncryption }
+
+            ) {
+                param($TextInput, $ExpectedAlgorithms)
+                $res = TabExpansion2 -inputScript $TextInput -cursorColumn $TextInput.Length
+                $completionText = $res.CompletionMatches.CompletionText
+                $completionText -join ' ' | Should -BeExactly $ExpectedAlgorithms
+            }
+        }
+    }
 }
