@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v.1.1.1 - 05/02/2024
+
 ### General Cmdlet Updates and Fixes
 
 + Fix Encryption parameter sets (#25).
