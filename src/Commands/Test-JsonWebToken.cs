@@ -10,6 +10,7 @@ namespace PoshJsonWebToken.Commands;
 /// Implementation for Test-JsonWebToken cmdlet.
 /// </summary>
 [Cmdlet(VerbsDiagnostic.Test, "JsonWebToken")]
+[OutputType(typeof(bool))]
 public sealed class TestJsonWebTokenCommand : JsonWebTokenCommandBase
 {
     #region Parameters

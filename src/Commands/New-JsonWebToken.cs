@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Management.Automation;
+using System.Security;
 using Jose;
 using PoshJsonWebToken.Common;
 
@@ -9,6 +10,7 @@ namespace PoshJsonWebToken.Commands;
 /// Implementation for New-JsonWebToken cmdlet.
 /// </summary>
 [Cmdlet(VerbsCommon.New, "JsonWebToken")]
+[OutputType(typeof(SecureString))]
 public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
 {
     #region Parameters
