@@ -11,7 +11,9 @@ $ModuleManifiestPath = Join-Path -Path $SourcePath -ChildPath 'PoshJsonWebToken.
 $ModuleManifest = Test-ModuleManifest -Path $ModuleManifiestPath
 $ModuleVersion = $ModuleManifest.Version
 $ModuleName = (Get-Item -Path $ModuleManifiestPath).BaseName
-$ReleasePath = Join-Path -Path $BuildPath -ChildPath $ModuleName -AdditionalChildPath $ModuleVersion
+$ModulePath = Join-Path -Path $BuildPath -ChildPath $ModuleName
+$ReleasePath = Join-Path -Path $ModulePath -ChildPath $ModuleVersion
+$ToolsPath = Join-Path -Path $PSScriptRoot -ChildPath 'tools'
 
 task Clean {
     try {
@@ -40,7 +42,7 @@ task Publish {
     }
 }
 
-task Docs {
+task ExternalHelp {
     $docsPath = Join-Path -Path $PSScriptRoot -ChildPath 'docs' -AdditionalChildPath 'en-US'
     $outputPath = Join-Path -Path $ReleasePath -ChildPath 'en-US'
     New-ExternalHelp -Path $docsPath -OutputPath $outputPath | Out-Null
@@ -97,8 +99,21 @@ task RunPesterTests {
     Invoke-Pester -Configuration $configuration
 }
 
-task Build -Jobs Clean, Publish, Docs, Package
+task MarkdownHelp {
+    # Add ProgressAction parameter workaround for https://github.com/PowerShell/platyPS/issues/595
+    $platyPSManifestPath = Join-Path -Path $ToolsPath -ChildPath 'Modules' -AdditionalChildPath 'platyPS', 'platyPS.psm1'
+    $platPSManifestContent = Get-Content -Path $platyPSManifestPath
+    $platPSManifestContent[2544] = "{0}`r`n{1}" -f "'ProgressAction',", $platPSManifestContent[2544]
+    $platPSManifestContent | Set-Content -Path $platyPSManifestPath
+    Import-Module $ModulePath -Force
+    $docsPath = Join-Path -Path $PSScriptRoot -ChildPath 'docs' -AdditionalChildPath 'en-US'
+    Update-MarkdownHelp -Path $docsPath
+}
+
+task Build -Jobs Clean, Publish, ExternalHelp, Package
 
 task Test -Jobs Publish, RunPesterTests
+
+task Docs -Jobs Publish, MarkdownHelp
 
 task . Build

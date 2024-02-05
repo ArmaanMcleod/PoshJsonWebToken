@@ -14,24 +14,20 @@ Tests signed or encrypted Json Web Token (JWT) is valid.
 ## SYNTAX
 
 ### SecretKey
-
 ```
 Test-JsonWebToken -Token <SecureString> -Algorithm <String> [-Encryption <String>] -SecretKey <SecureString>
  [<CommonParameters>]
 ```
 
 ### Certificate
-
 ```
 Test-JsonWebToken -Token <SecureString> -Algorithm <String> [-Encryption <String>]
  -Certificate <X509Certificate2> [<CommonParameters>]
 ```
 
 ### None
-
 ```
-Test-JsonWebToken -Token <SecureString> -Algorithm <String> [-Encryption <String>]
- [<CommonParameters>]
+Test-JsonWebToken -Token <SecureString> -Algorithm <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -149,6 +145,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Encryption
+
+The encryption used for JWE (Json Web Encryption) JWT tokens.
+
+```yaml
+Type: String
+Parameter Sets: SecretKey, Certificate
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SecretKey
 
 The secret secret key used for signing or encryption.
@@ -194,22 +206,6 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Encryption
-
-The encryption used for JWE (Json Web Encryption) JWT tokens.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
