@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### General Cmdlet Updates and Fixes
+
++ Fix Encryption parameter sets (#25).
+  + Added `-Encryption` parameter to only `SecretKey` and `Certificate` parameter sets.
++ Add output types to cmdlets (#23).
+  + Added missing `SecureString` output type for `New-JsonWebToken` cmdlet.
+  + Added missing `bool` output type for `Test-JsonWebToken` cmdlet.
+
+### Build and Packaging Improvements
+
++ Included `Docs` build task to update markdown documentation (#25).
+
+### Documentation and Help Content
+
++ Fix typo in manifest description (#22).
+
 ## v.1.1.0 - 05/02/2024
 
 ### General Cmdlet Updates and Fixes
