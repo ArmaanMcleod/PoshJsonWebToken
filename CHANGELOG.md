@@ -2,9 +2,20 @@
 
 ## Unreleased
 
+## v.1.1.0 - 05/02/2024
+
 ### General Cmdlet Updates and Fixes
 
 + Moved `-Algorithm` parameter to base class and changed type from `JwsAlgorithm` to `string` (#13) (#14).
++ Exclude `PS256`, `PS384` & `PS512` algorithms (#17).
+  + This was to prevent these algorithms from being accepted since they are not cross platform (#6).
++ Add encrypted token support (#8).
+  + Includes `-Encryption` parameter so encrypted JWT tokens can be created.
+
+### Build and Packaging Improvements
+
++ Add Test workflow, PSGallery and License badges (#19).
++ Add argument completer tests (#20).
 
 ## v.1.0.2 - 29/01/2024
 
