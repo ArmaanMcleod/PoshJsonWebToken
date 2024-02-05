@@ -5,7 +5,7 @@
     GUID                 = 'e77c8d30-6e39-4786-be2d-0da51418d57a'
     Author               = 'ArmaanMcleod'
     Copyright            = '(c) ArmaanMcleod. All rights reserved.'
-    Description          = 'This module contains cmdlets to help with generating and validating JWT tokens.'
+    Description          = 'This module contains cmdlets to help with generating and validating signed or encrypyted JWT tokens.'
     PowerShellVersion    = '7.2'
     CmdletsToExport      = @(
         'New-JsonWebToken'
@@ -16,6 +16,10 @@
             Tags         = @(
                 'JWT'
                 'JsonWebToken'
+                'JWS'
+                'JsonWebSignature'
+                'JWE'
+                'JsonWebEncryption'
             )
             LicenseUri   = 'https://github.com/ArmaanMcleod/PoshJsonWebToken/blob/main/LICENSE'
             ProjectUri   = 'https://github.com/ArmaanMcleod/PoshJsonWebToken'
