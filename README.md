@@ -1,5 +1,9 @@
 # PoshJsonWebToken
 
+[![Test workflow](https://github.com/ArmaanMcleod/PoshJsonWebToken/workflows/Test%20PoshJsonWebToken/badge.svg)](https://github.com/ArmaanMcleod/PoshJsonWebToken/actions/workflows/ci.yml)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PoshJsonWebToken.svg)](https://www.powershellgallery.com/packages/PoshJsonWebToken)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ArmaanMcleod/PoshJsonWebToken/blob/main/LICENSE)
+
 Another PowerShell module for generating and validating JWT tokens.
 
 While there are a few other JWT PowerShell modules on the gallery this module includes the following features:
