@@ -1,6 +1,6 @@
 @{
     RootModule           = 'PoshJsonWebToken.psm1'
-    ModuleVersion        = '1.0.2'
+    ModuleVersion        = '1.1.0'
     CompatiblePSEditions = @('Core')
     GUID                 = 'e77c8d30-6e39-4786-be2d-0da51418d57a'
     Author               = 'ArmaanMcleod'
