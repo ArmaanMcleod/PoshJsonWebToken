@@ -7,3 +7,13 @@ internal enum JwsAlgorithmFamily
     ES,
     Unknown
 }
+
+internal enum JweAlgorithmFamily
+{
+    RSA,
+    DIR,
+    AESKeyWrap,
+    AESGCMKeyWrap,
+    PBES2,
+    Unknown
+}

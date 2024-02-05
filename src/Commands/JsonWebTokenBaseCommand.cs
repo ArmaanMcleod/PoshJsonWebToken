@@ -33,6 +33,10 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
     [ArgumentCompleter(typeof(AlgorithmCompleter))]
     public string Algorithm { get; set; }
 
+    [Parameter(Mandatory = false)]
+    [ArgumentCompleter(typeof(EncryptionCompleter))]
+    public string Encryption { get; set; }
+
     /// <summary>
     /// Secure key used for signing JWT token.
     /// </summary>
@@ -50,7 +54,7 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
     #region Protected Members
 
     /// <summary>
-    /// Method used to determine Json Web Signature (JWS) hash algorithm hash signing key.
+    /// Method used to determine Json Web Signature (JWS) hash algorithm signing key.
     /// </summary>
     /// <param name="algorithm">The hash algorithm</param>
     /// <returns>The signing key object.</returns>
@@ -58,16 +62,21 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
     {
         object key = null;
 
+        if (MyInvocation.BoundParameters.ContainsKey(nameof(Encryption)))
+        {
+            AlgorithmHelpers.ReportEncryptionRequiredWithJweAlgorithm(this, Encryption);
+        }
+
         if (ParameterSetName.Equals(NoneParameterSet, StringComparison.OrdinalIgnoreCase))
         {
             if (algorithm == JwsAlgorithm.none)
             {
-                WriteWarning(AlgorithmStrings.NoneAlgorithmWarning);
+                WriteWarning(AlgorithmStrings.NoneJwsAlgorithmWarning);
                 return key;
             }
             else
             {
-                AlgorithmHelpers.ReportAlgorithmWithoutKey(this, algorithm);
+                AlgorithmHelpers.ReportJwsAlgorithmWithoutKey(this, algorithm);
             }
         }
 
@@ -81,7 +90,7 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
             }
             else
             {
-                AlgorithmHelpers.ReportInvalidSecretKeyAlgorithm(this, SecretKey);
+                AlgorithmHelpers.ReportInvalidSecretKeyJwsAlgorithm(this, SecretKey);
             }
         }
         else if (ParameterSetName.Equals(CertificateParameterSet, StringComparison.OrdinalIgnoreCase))
@@ -96,7 +105,56 @@ public abstract class JsonWebTokenCommandBase : PSCmdlet
             }
             else
             {
-                AlgorithmHelpers.ReportInvalidCertificateAlgorithm(this, Certificate);
+                AlgorithmHelpers.ReportInvalidCertificateJwsAlgorithm(this, Certificate);
+            }
+        }
+
+        return key;
+    }
+
+    /// <summary>
+    /// Method used to determine Json Web Encryption (JWE) hash algorithm encryption key.
+    /// </summary>
+    /// <param name="algorithm"></param>
+    /// <returns></returns>
+    protected object GetTokenEncryptionKey(JweAlgorithm algorithm)
+    {
+        object key = null;
+
+        if (!MyInvocation.BoundParameters.ContainsKey(nameof(Encryption)))
+        {
+            AlgorithmHelpers.ReportEncryptionRequiredWithJweAlgorithm(this, Encryption);
+        }
+
+        var algorithmFamily = AlgorithmHelpers.GetJweAlgorithmFamily(algorithm);
+
+        if (ParameterSetName.Equals(SecretKeyParameterSet, StringComparison.OrdinalIgnoreCase))
+        {
+            if (algorithmFamily is JweAlgorithmFamily.DIR
+                or JweAlgorithmFamily.AESKeyWrap
+                or JweAlgorithmFamily.AESGCMKeyWrap)
+            {
+                key = Encoding.UTF8.GetBytes(SecretKey.ToPlainText());
+            }
+            else if (algorithmFamily == JweAlgorithmFamily.PBES2)
+            {
+                key = SecretKey.ToPlainText();
+            }
+            else
+            {
+                AlgorithmHelpers.ReportInvalidSecretKeyJweAlgorithm(this, SecretKey);
+            }
+        }
+
+        else if (ParameterSetName.Equals(CertificateParameterSet, StringComparison.OrdinalIgnoreCase))
+        {
+            if (algorithmFamily == JweAlgorithmFamily.RSA)
+            {
+                key = Certificate.GetRSAPrivateKey();
+            }
+            else
+            {
+                AlgorithmHelpers.ReportInvalidCertificateJweAlgorithm(this, Certificate);
             }
         }
 
