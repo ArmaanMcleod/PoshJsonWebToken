@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### General Cmdlet Updates and Fixes
+
++ Add compression switch parameter to New-JsonWebToken cmdlet (#24).
+  + Added `-Compression` switch to `New-JsonWebToken` cmdlet.
+  + Compresses payload before encryption.
+
+### Documentation and Help Content
+
++ Add PS Gallery version badge (#28).
+
 ## v1.1.1 - 05/02/2024
 
 ### General Cmdlet Updates and Fixes
