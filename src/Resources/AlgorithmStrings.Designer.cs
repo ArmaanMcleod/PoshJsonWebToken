@@ -92,6 +92,17 @@ namespace PoshJsonWebToken.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Compression parameter requires any one of &apos;{0}&apos; JWE encryptions..
+        /// </summary>
+        internal static string CompressionRequiresJweEncryption
+        {
+            get
+            {
+                return ResourceManager.GetString("CompressionRequiresJweEncryption", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Algorithm parameter requires any one of &apos;{0}&apos; algorithms..
         /// </summary>
         internal static string InvalidAlgorithm

@@ -15,14 +15,14 @@ Creates a signed or encrypted Json Web Token (JWT).
 
 ### SecretKey
 ```
-New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
- -SecretKey <SecureString> [<CommonParameters>]
+New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] [-Compression] -Algorithm <String>
+ [-Encryption <String>] -SecretKey <SecureString> [<CommonParameters>]
 ```
 
 ### Certificate
 ```
-New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] -Algorithm <String> [-Encryption <String>]
- -Certificate <X509Certificate2> [<CommonParameters>]
+New-JsonWebToken -Payload <Hashtable> [-ExtraHeader <Hashtable>] [-Compression] -Algorithm <String>
+ [-Encryption <String>] -Certificate <X509Certificate2> [<CommonParameters>]
 ```
 
 ### None
@@ -214,6 +214,22 @@ Parameter Sets: SecretKey
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Compression
+
+The switch to compress payload before encryption.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: SecretKey, Certificate
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -31,6 +31,13 @@ public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
     [Parameter(Mandatory = false, ParameterSetName = NoneParameterSet)]
     public Hashtable ExtraHeader { get; set; }
 
+    /// <summary>
+    /// The switch to compress payload before encryption.
+    /// </summary>
+    [Parameter(Mandatory = false, ParameterSetName = SecretKeyParameterSet)]
+    [Parameter(Mandatory = false, ParameterSetName = CertificateParameterSet)]
+    public SwitchParameter Compression { get; set; }
+
     #endregion Parameters
 
     #region Overrides
@@ -45,6 +52,11 @@ public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
 
         if (AlgorithmHelpers.TryParseJwsAlgorithm(Algorithm, out JwsAlgorithm jwsAlgorithm))
         {
+            if (Compression.IsPresent)
+            {
+                AlgorithmHelpers.ReportCompressionRequiresJweEncryption(this, Compression);
+            }
+
             string token = JWT.Encode(
                 payload: payloadDictionary,
                 key: GetTokenSigningKey(jwsAlgorithm),
@@ -62,6 +74,7 @@ public sealed class NewJsonWebTokenCommand : JsonWebTokenCommandBase
                     key: GetTokenEncryptionKey(jweAlgorithm),
                     alg: jweAlgorithm,
                     enc: jweEncryption,
+                    compression: Compression.IsPresent ? JweCompression.DEF : null,
                     extraHeaders: extraHeaders);
 
                 WriteObject(token.ToSecureString());

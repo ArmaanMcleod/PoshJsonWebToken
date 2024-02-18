@@ -336,7 +336,7 @@ Describe 'JsonWebToken Tests' {
                 $x509Certificate = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($CertificatePath)
 
                 foreach ($enc in $Encryption) {
-                    $token = New-JsonWebToken -Payload $Payload -Algorithm $Algorithm -Encryption $enc -Certificate $x509Certificate
+                    $token = New-JsonWebToken -Payload $Payload -Algorithm $Algorithm -Encryption $enc -Certificate $x509Certificate -ExtraHeader $ExtraHeader
                     $validToken = Test-JsonWebToken -Token $token -Certificate $x509Certificate -Algorithm $Algorithm -Encryption $enc
                     $validToken | Should -BeTrue
                 }
@@ -528,6 +528,44 @@ Describe 'JsonWebToken Tests' {
                 }
             }
         }
+
+        Context 'DEF' {
+            It "<Title>" -TestCases @(
+                @{
+                    Payload         = $payload
+                    Algorithm       = 'RSA_OAEP_256'
+                    Encryption      = $encryptions
+                    CertificatePath = Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Certificates' -AdditionalChildPath 'RSA', 'certificate.p12')
+                    Title           = "Should return a valid JWT token using RSA_OAEP_256 algorithm and '$encryptions' encryption and DEFLATE compression and certificate"
+                }
+                @{
+                    Payload         = $payload
+                    Algorithm       = 'RSA_OAEP'
+                    Encryption      = $encryptions
+                    CertificatePath = Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Certificates' -AdditionalChildPath 'RSA', 'certificate.p12')
+                    Title           = "Should return a valid JWT token using RSA_OAEP algorithm and '$encryptions' encryption and DEFLATE compression and certificate"
+                    Compression     = $true
+                }
+                @{
+                    Payload         = $payload
+                    Algorithm       = 'RSA1_5'
+                    Encryption      = $encryptions
+                    CertificatePath = Resolve-Path -Path (Join-Path -Path $PSScriptRoot -ChildPath 'Certificates' -AdditionalChildPath 'RSA', 'certificate.p12')
+                    Title           = "Should return a valid JWT token using RSA1_5 algorithm and '$encryptions' encryption and DEFLATE compression and certificate"
+                    Compression     = $true
+                }
+            ) {
+                param($Payload, $Algorithm, $Encryption, $CertificatePath, $Title, $Compression)
+
+                $x509Certificate = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($CertificatePath)
+
+                foreach ($enc in $Encryption) {
+                    $token = New-JsonWebToken -Payload $Payload -Algorithm $Algorithm -Encryption $enc -Certificate $x509Certificate -Compression:$Compression
+                    $validToken = Test-JsonWebToken -Token $token -Certificate $x509Certificate -Algorithm $Algorithm -Encryption $enc
+                    $validToken | Should -BeTrue
+                }
+            }
+        }
     }
 
     Context 'Invalid Parameter Combinations' {
@@ -619,6 +657,11 @@ Describe 'JsonWebToken Tests' {
 
             { Test-JsonWebToken -Token $token -Algorithm 'DIR' -Encryption 'A128CBC_HS256' -Certificate $x509Certificate }
             | Should -Throw -ErrorId 'CertificateRequiredJweAlgorithms,PoshJsonWebToken.Commands.TestJsonWebTokenCommand'
+        }
+
+        It 'Should throw an exception if compression used with JWE algorithm' {
+            { New-JsonWebToken -Payload $payload -Algorithm 'RS256' -SecretKey $secretKey -Compression }
+            | Should -Throw -ErrorId 'CompressionRequiresJweEncryption,PoshJsonWebToken.Commands.NewJsonWebTokenCommand'
         }
     }
 

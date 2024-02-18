@@ -28,6 +28,10 @@ While there are a few other JWT PowerShell modules on the gallery this module in
     + `A128GCMKW`, `A192GCMKW`, `A256GCMKW` (AES GCM Key Wrap) encryption with `A128CBC_HS256`, `A192CBC_HS384`, `A256CBC_HS512`, `A128GCM`, `A192GCM`, `A256GCM`.
     + `PBES2_HS256_A128KW`, `PBES2_HS384_A192KW`, `PBES2_HS512_A256KW` (Password-Based Encryption Scheme 2) with `A128CBC_HS256`, `A192CBC_HS384`, `A256CBC_HS512`, `A128GCM`, `A192GCM`, `A256GCM`.
 
+  + Compression
+
+    + `DEF` (DEFLATE) compression.
+
 + Uses the ultimate [`jose-jwt`](https://www.nuget.org/packages/jose-jwt/) nuget package to get a wide variety of builtin JWT support into PowerShell.
 
 ## Requirements

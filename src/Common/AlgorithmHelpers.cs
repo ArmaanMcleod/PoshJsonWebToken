@@ -135,6 +135,32 @@ internal static class AlgorithmHelpers
     }
 
     /// <summary>
+    /// Throws exception if compression is not used with JWE encryption.
+    /// </summary>
+    /// <param name="cmdlet">The cmdlet.</param>
+    /// <param name="compression">The compression switch parameter.</param>
+    internal static void ReportCompressionRequiresJweEncryption(PSCmdlet cmdlet, SwitchParameter compression)
+    {
+        var encryptions = string.Join(
+            ",",
+            JweEncryption.A128CBC_HS256,
+            JweEncryption.A192CBC_HS384,
+            JweEncryption.A256CBC_HS512,
+            JweEncryption.A128GCM,
+            JweEncryption.A192GCM,
+            JweEncryption.A256GCM);
+
+        var errorMessage = string.Format(AlgorithmStrings.CompressionRequiresJweEncryption, encryptions);
+        var exception = new ArgumentException(errorMessage);
+        var errorRecord = new ErrorRecord(
+            exception,
+            nameof(AlgorithmStrings.CompressionRequiresJweEncryption),
+            ErrorCategory.InvalidArgument,
+            compression);
+        cmdlet.ThrowTerminatingError(errorRecord);
+    }
+
+    /// <summary>
     /// Throws expection if incorrect JWE algorithm is used with secret key.
     /// </summary>
     /// <param name="cmdlet">The cmdlet.</param>
