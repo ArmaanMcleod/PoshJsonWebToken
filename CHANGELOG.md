@@ -12,6 +12,10 @@
 
 + Add PS Gallery version badge (#28).
 
+### Build and Packaging Improvements
+
++ Updated repository to use PowerShellBuildTools as a git submodule.
+
 ## v1.1.1 - 05/02/2024
 
 ### General Cmdlet Updates and Fixes
