@@ -22,13 +22,15 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Build and test module
         shell: pwsh
-        run: ./build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Build
+        run: ./PowerShellBuildTools/build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Build
 
       - name: Capture PowerShell Module
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PSModule
           path: out/*.nupkg
@@ -55,9 +57,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Restore Built PowerShell Module
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: PSModule
           path: out
@@ -65,17 +69,17 @@ jobs:
       - name: Install Built PowerShell Module
         shell: pwsh
         run: |
-          Import-Module ./tools/helper.psm1 -Force
+          Import-Module ./PowerShellBuildTools/tools/helper.psm1 -Force
           Expand-Nupkg -ModuleManfifestPath ./src/PoshJsonWebToken.psd1 -OutputPath out
 
       - name: Run Tests - PowerShell
         shell: pwsh
         run: |
-          ./build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Test
+          ./PowerShellBuildTools/build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Test
 
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Unit Test Results (${{ matrix.info.name }})
           path: ./out/TestResults/Pester.xml
