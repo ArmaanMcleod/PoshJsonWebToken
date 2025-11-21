@@ -1,0 +1,3 @@
+[submodule "PowerShellBuildTools"]
+	path = PowerShellBuildTools
+	url = https://github.com/ArmaanMcleod/PowerShellBuildTools.git
