@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v1.2.0 - 22/11/2025
+
 ### General Cmdlet Updates and Fixes
 
 + Add compression switch parameter to New-JsonWebToken cmdlet (#24).
