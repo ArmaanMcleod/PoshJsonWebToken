@@ -27,7 +27,7 @@ jobs:
 
       - name: Build and test module
         shell: pwsh
-        run: ./build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Build
+        run: ./PowerShellBuildTools/build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Build
 
       - name: Capture PowerShell Module
         uses: actions/upload-artifact@v4
@@ -75,7 +75,7 @@ jobs:
       - name: Run Tests - PowerShell
         shell: pwsh
         run: |
-          ./build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Test
+          ./PowerShellBuildTools/build.ps1 -Configuration $env:BUILD_CONFIGURATION -Task Test
 
       - name: Upload Test Results
         if: always()
