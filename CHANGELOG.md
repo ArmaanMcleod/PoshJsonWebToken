@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Build and Packaging Improvements
+
++ Fix git submodule path in VSCode build task and documentation (#29).
+
 ## v1.2.0 - 22/11/2025
 
 ### General Cmdlet Updates and Fixes
