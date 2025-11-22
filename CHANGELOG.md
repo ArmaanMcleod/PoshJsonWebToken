@@ -4,7 +4,7 @@
 
 ### Build and Packaging Improvements
 
-+ Fix git submodule path in VSCode build task and documentation (#29).
++ Fix git submodule path in VSCode build task and documentation (#34).
 
 ## v1.2.0 - 22/11/2025
 
