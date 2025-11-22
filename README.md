@@ -109,8 +109,8 @@ Install-Module -Name PoshJsonWebToken -Scope AllUsers
 ## Contributing
 
 Contributing is quite easy, fork this repo and submit a pull request with the changes.
-To build this module run `.\build.ps1` in PowerShell.
-To test a build run `.\build.ps1 -Task Test` in PowerShell.
+To build this module run `./PowerShellBuildTools/build.ps1` in PowerShell.
+To test a build run `./PowerShellBuildTools/build.ps1 -Task Test` in PowerShell.
 This script will ensure all dependencies are installed before running the test suite.
 
 <!-- References -->

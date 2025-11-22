@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Build and Packaging Improvements
+
++ Fix git submodule path in VSCode build task and documentation (#34).
+
 ## v1.2.0 - 22/11/2025
 
 ### General Cmdlet Updates and Fixes
@@ -16,7 +20,7 @@
 
 ### Build and Packaging Improvements
 
-+ Updated repository to use PowerShellBuildTools as a git submodule.
++ Updated repository to use PowerShellBuildTools as a git submodule (#32).
 
 ## v1.1.1 - 05/02/2024
 
