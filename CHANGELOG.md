@@ -5,6 +5,7 @@
 ### Build and Packaging Improvements
 
 + Fix git submodule path in VSCode build task and documentation (#34).
++ Added `global.json` file to pin .NET SDK version to 10.0.100 (#36).
 
 ## v1.2.0 - 22/11/2025
 
